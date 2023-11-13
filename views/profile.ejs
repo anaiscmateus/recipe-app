@@ -1,0 +1,183 @@
+<!doctype html>
+<html>
+<head>
+    <title>CookShare - Profile</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+<header>
+  <nav class="bg-gray-800">
+    <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+      <div class="relative flex h-16 items-center justify-between">
+        <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+          <!-- Mobile menu button-->
+          <button type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+            <span class="absolute -inset-0.5"></span>
+            <span class="sr-only">Open main menu</span>
+            <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+            <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+          <div class="flex flex-shrink-0 items-center">
+            <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company">
+          </div>
+          <div class="hidden sm:ml-6 sm:block">
+            <div class="flex space-x-4">
+              <a href="/profile" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Profile</a>
+              <a href="/recipes" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Recipes</a>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+    <!-- Mobile menu, show/hide based on menu state. -->
+    <div class="sm:hidden" id="mobile-menu">
+      <div class="space-y-1 px-2 pb-3 pt-2">
+        <a href="/profile" class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium" aria-current="page">Profile</a>
+        <a href="/recipes" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Recipes</a>
+      </div>
+    </div>
+  </nav>  
+</header>
+
+<div class="flex-col justify-center align-center p-6">
+
+    <div>
+        <h1 class="text-xl font-bold"><span class="fa fa-anchor"></span> Profile Page</h1>
+    </div>
+
+    <div>
+
+        <!-- LOCAL INFORMATION -->
+        <div>
+            <div>
+                <h3 class="text-xl font-semibold"><span></span> Local</h3>
+
+                <% if (user.local.email) { %>
+                    <p>
+                        <strong>id</strong>: <%= user._id %><br>
+                        <strong>email</strong>: <%= user.local.email %><br>
+                        <strong>password</strong>: <%= user.local.password %>
+                    </p>
+
+                    <!-- <a href="/unlink/local">Unlink</a> -->
+                <% } else { %>
+                    <a href="/connect/local">Connect Local</a>
+                <% } %>
+                <a href="/logout" class="inline-block px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-pink-500 rounded-md hover:bg-pink-700 focus:outline-none focus:bg-gray-600">Logout</a>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<section class="max-w-4xl p-6 bg-indigo-600 dark:bg-gray-800 mt-20">
+  <% if (user.local.email) { %>
+  <h1 class="text-xl font-bold text-white capitalize dark:text-white">Add Recipe</h1>
+  <form action="/profile" method="post">
+      <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+          <div>
+              <label class="text-white dark:text-gray-200" for="email">Email Address</label>
+              <input type="text" value="<%= user.local.email %>" name="email" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+          </div>
+          <div>
+            <label class="text-white dark:text-gray-200" for="recipeName">Recipe Name</label>
+            <input type="text" placeholder="Recipe Name" name="recipeName" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+          </div>
+          <div>
+            <label class="text-white dark:text-gray-200" for="recipeDesc">Recipe Description</label>
+            <input type="text" placeholder="Recipe Description" name="recipeDesc" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+          </div>
+          <div>
+            <label class="text-white dark:text-gray-200" for="recipePrep">Recipe Description</label>
+            <input type="text" placeholder="Recipe Prep Time" name="recipePrep" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+          </div>
+          <div>
+            <label class="text-white dark:text-gray-200" for="ingredients">Ingredients</label>
+            <textarea name="ingredients" placeholder="Recipe Ingredients" type="textarea" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"></textarea>
+          </div>
+          <div>
+              <label class="text-white dark:text-gray-200" for="instructions">Instructions</label>
+              <textarea name="instructions" placeholder="Recipe Instructions" type="textarea" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"></textarea>
+          </div>
+          <!-- LOOK INTO FILE HOSTING SERVICE FOR IMAGE FILES. FOR NOW GENERATE A RANDOM IMAGE BASED ON THE RECIPE NAME -->
+          <!-- <div>
+              <label class="block text-sm font-medium text-white">Image</label>
+          <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+              <div class="space-y-1 text-center">
+                <svg class="mx-auto h-12 w-12 text-white" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                  <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <div class="flex text-sm text-gray-600">
+                  <label for="recipeImage" class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+                    <span class="">Upload a file</span>
+                    <input id="recipeImage" name="recipeImage" type="file" class="sr-only">
+                  </label>
+                  <p class="pl-1 text-white">or drag and drop</p>
+                </div>
+                <p class="text-xs text-white">
+                  PNG, JPG, GIF up to 10MB
+                </p>
+              </div>
+            </div> -->
+          </div>
+      </div>
+      <div class="flex justify-end mt-6">
+          <button class="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-pink-500 rounded-md hover:bg-pink-700 focus:outline-none focus:bg-gray-600">Add</button>
+      </div>
+  </form>
+</section>
+
+<section>
+  <div>
+    <h2 class="text-3xl font-bold mb-10">My Recipes</h2>
+    <ul class="recipes">
+
+    <% for(var i=0; i<recipes.length; i++) {%>
+      <% if (recipes[i].email === user.local.email) { %>
+      <li class="recipe">
+        <div class="container grid grid-cols-12 my-5 dark:bg-gray-900">
+          <div class="bg-no-repeat bg-cover dark:bg-gray-700 col-span-full lg:col-span-4" style="background-image: url('https://source.unsplash.com/random/640x480?<%= recipes[i].recipeName %>'); background-position: center center; background-blend-mode: multiply; background-size: cover;"></div>
+          <div class="flex flex-col p-6 col-span-full row-span-full lg:col-span-8 lg:p-10">
+            <h3 class="text-3xl font-semibold"><%= recipes[i].recipeName %></h3>
+            <p class="inline-flex items-center pt-2 pb-6 space-x-2 text-sm dark:text-violet-400"><%= recipes[i].recipeDesc %></p>
+            <h4>Ingredients</h4>
+            <span class="inline-flex items-center pt-2 pb-6 space-x-2 text-sm dark:text-violet-400"><%= recipes[i].ingredients %></span>
+            <h4>Instructions</h4>
+            <span class="inline-flex items-center pt-2 pb-6 space-x-2 text-sm dark:text-violet-400"><%= recipes[i].instructions %></span>
+            <div class="flex items-center justify-between pt-2">
+              <div class="flex space-x-2">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 dark:text-gray-400">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd"></path>
+                </svg>
+                <span class="self-center text-sm">by <span><%= recipes[i].email %></span></span>
+              </div>
+              <span class="text-xs">Prep Time: <span class="text-xs"><%= recipes[i].recipePrep %></span></span>
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 trash">
+                <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z" clip-rule="evenodd" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 pen">
+                <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z" />
+              </svg>                            
+            </div>
+          </div>
+        </div>
+      </li>
+      <% } %>
+      </div>
+  </ul>
+</div>
+</section>
+<% } %>
+<% } %>
+<script src="main.js"></script>
+</body>
+</html>
