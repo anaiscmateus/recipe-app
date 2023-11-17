@@ -38,7 +38,6 @@ module.exports = function(app, passport, db) {
     });
 
 // RECIPE BLOG ROUTES ===============================================================
-
     app.post('/profile', (req, res) => {
       db.collection('recipes').save({email: req.body.email, recipeName: req.body.recipeName, recipeDesc: req.body.recipeDesc, recipePrep: req.body.recipePrep, ingredients: req.body.ingredients, instructions: req.body.instructions}, (err, result) => {
         if (err) return console.log(err)
@@ -53,6 +52,48 @@ module.exports = function(app, passport, db) {
         res.send('Recipe deleted!')
       })
     })
+    
+    app.put('/profile', (req, res) => {
+      const { email, oldRecipeName, oldRecipeDesc, oldRecipePrep, oldIngredients, oldInstructions,
+              updatedRecipeName, updatedRecipeDesc, updatedRecipePrep, updatedIngredients, updatedInstructions } = req.body;
+    
+      // Filter: Find the recipe with the oldRecipeName and oldRecipeDesc
+      const filter = { 
+        email: email,
+        recipeName: oldRecipeName,
+        recipeDesc: oldRecipeDesc,
+        recipePrep: oldRecipePrep,
+        ingredients: oldIngredients,
+        instructions: oldInstructions
+      };
+    
+      // Update: Set the updatedRecipeName, updatedRecipeDesc, updatedRecipePrep, updatedIngredients, and updatedInstructions
+      const update = { $set: { 
+        recipeName: updatedRecipeName,
+        recipeDesc: updatedRecipeDesc,
+        recipePrep: updatedRecipePrep,
+        ingredients: updatedIngredients,
+        instructions: updatedInstructions
+      } };
+    
+      // Options: Set the returnOriginal option to false to get the updated document
+      const options = { returnOriginal: false };
+    
+      // Perform the update
+      db.collection('recipes').findOneAndUpdate(filter, update, options, (err, result) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).send('Internal Server Error');
+        }
+    
+        if (!result.value) {
+          // If the recipe with old properties is not found
+          return res.status(404).send('Recipe not found');
+        }
+    
+        res.send('Recipe updated successfully');
+      });
+    });    
 
 // =============================================================================
 // AUTHENTICATE (FIRST LOGIN) ==================================================
