@@ -5,7 +5,7 @@
 ### Goal
 Create a full-stack application with login and CRUD functions, utilizing a MongoDB database. CookShare is an app designed for food lovers to create an account, log in, and add, update, delete, and view each other's recipes.
 
-  ![CookShare Landing Page](public/img/landing.png)
+![landing](https://github.com/anaiscmateus/recipe-app/assets/75923327/eb151f67-901c-4913-a5ee-165f134af900)
 
 ## How It's Made
 
